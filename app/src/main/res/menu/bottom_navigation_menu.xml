@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_item_groups"
+        android:icon="@drawable/ic_groups_nav"
+        android:title="@string/groups"
+        android:enabled="true"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/nav_item_schedule"
+        android:icon="@drawable/ic_shedule_nav"
+        android:title="@string/schedule"
+        android:enabled="true"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/nav_item_alert"
+        android:icon="@drawable/ic_alert_nav"
+        android:title="@string/alert"
+        android:enabled="true"
+        app:showAsAction="always"/>
+</menu>

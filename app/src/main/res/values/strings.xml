@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">TeacherHelper</string>
+    <string name="schedule">Розклад</string>
+    <string name="groups">Групи</string>
+    <string name="alert">Нагадування</string>
+</resources>
