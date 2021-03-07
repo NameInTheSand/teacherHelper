@@ -1,46 +1,50 @@
 package com.example.teacherhelper
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import com.example.teacherhelper.alert.AlertFragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.navigation.NavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.teacherhelper.databinding.ActivityMainBinding
-import com.example.teacherhelper.groups.GroupsFragment
-import com.example.teacherhelper.schedule.ScheduleFragment
+import com.example.teacherhelper.navigation.setupWithNavController
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private var currentNavController: LiveData<NavController>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupBottomNavigationView()
-        loadFragment(GroupsFragment())
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        }
     }
 
-    private fun setupBottomNavigationView() {
-            binding.appBar.setOnNavigationItemSelectedListener {
-                when(it.itemId){
-                    R.id.nav_item_schedule->{
-                        loadFragment(ScheduleFragment())
-                        return@setOnNavigationItemSelectedListener true
-                    }
-                    R.id.nav_item_groups->{
-                        loadFragment(GroupsFragment())
-                        return@setOnNavigationItemSelectedListener true
-                    }
-                    R.id.nav_item_alert->{
-                        loadFragment(AlertFragment())
-                        return@setOnNavigationItemSelectedListener true
-                    }
-                }
-                false
-            }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        setupBottomNavigationBar()
     }
-    private fun loadFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_host_fragment, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+
+    private fun setupBottomNavigationBar(){
+        val bottomNavigationView = binding.appBar
+        val navGraphIds =
+            listOf(R.navigation.nav_grops, R.navigation.nav_shedule, R.navigation.nav_alert)
+        val controller = bottomNavigationView.setupWithNavController(
+            navGraphIds = navGraphIds,
+            fragmentManager = supportFragmentManager,
+            containerId = R.id.main_host_fragment,
+            intent = intent
+        )
+        controller.observe(this, { navController ->
+            setupActionBarWithNavController(navController)
+        })
+        currentNavController = controller
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return currentNavController?.value?.navigateUp() ?: false
+    }
+
 }

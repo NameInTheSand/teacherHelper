@@ -10,8 +10,11 @@ interface GroupsDAO {
     @Query("SELECT * from groups")
     fun getAllGroups(): List<Groups>
 
-    @Query("SELECT * from groups WHERE course LIKE :search ")
+    @Query("SELECT * from groups WHERE name LIKE :search ")
     fun getSearch(search: String?): List<Groups>
+
+    @Query("DELETE FROM groups")
+    fun nukeTable()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(groups: Groups)
