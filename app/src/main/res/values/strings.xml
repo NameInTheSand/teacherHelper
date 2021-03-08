@@ -7,4 +7,5 @@
     <string name="course_enter">Введіть курс</string>
     <string name="confirm">Підтвердити</string>
     <string name="dismiss">Відмінити</string>
+    <string name="add_group">Додати нову групу</string>
 </resources>

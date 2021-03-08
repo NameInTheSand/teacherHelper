@@ -15,7 +15,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_height="match_parent">
+        android:layout_marginHorizontal="20dp"
+        android:layout_height="wrap_content">
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,11 +25,13 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:weightSum="100"
             android:padding="10dp"
             android:orientation="horizontal">
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/group_name"
                 android:layout_marginStart="20dp"
+                android:layout_weight="60"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,6 +41,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/group_course"
                 android:layout_marginStart="10dp"
+                android:layout_weight="30"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,8 +51,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:scaleType="fitCenter"
                 android:backgroundTint="@color/white"
-                android:layout_marginStart="270dp"
                 android:background="@drawable/ic_edit"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         </com.google.android.material.card.MaterialCardView>

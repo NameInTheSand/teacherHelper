@@ -13,27 +13,23 @@ import kotlinx.coroutines.launch
 class GroupsViewModel(private val groupsRepository: GruopsRepository) : ViewModel(),Observable {
 
     val groups = groupsRepository.groups
-    @Bindable
-    val inputName = MutableLiveData<String>()
-    @Bindable
-    val inputCourse = MutableLiveData<Int>()
+
+    var searchResult:List<Groups> = mutableListOf()
 
      fun insert(groups:Groups):Job = viewModelScope.launch {
         groupsRepository.insert(groups)
     }
-    fun search(group: String): List<Groups> {
-        var SearchResult:List<Groups> = mutableListOf()
-        if(group.isEmpty()){
-                SearchResult = groupsRepository.groups.value!!
+    fun search(group: String?) {
+        if(group.isNullOrEmpty()){
+                searchResult = groupsRepository.groups.value!!
         }
         else{
         viewModelScope.launch {
-            groupsRepository.search(group).let {
-                SearchResult = it
+            groupsRepository.search('%'+group+'%').let {
+                searchResult = it
             }
         }
         }
-        return SearchResult
     }
 
     fun nuketable() = viewModelScope.launch {
