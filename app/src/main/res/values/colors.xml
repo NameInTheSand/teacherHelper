@@ -12,6 +12,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="active">#EA0000</color>
     <color name="inactive">#737B8E</color>
+    <color name="colorItems">#292828</color>
     <color name="navViewBackgroundColor">#FFFFFF</color>
     <color name="colorPrimary">#EA0000</color>
     <color name="colorAccent">#FF3700B3</color>

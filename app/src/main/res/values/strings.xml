@@ -3,4 +3,8 @@
     <string name="schedule">Розклад</string>
     <string name="groups">Групи</string>
     <string name="alert">Нагадування</string>
+    <string name="group_enter">Введіть назву групи</string>
+    <string name="course_enter">Введіть курс</string>
+    <string name="confirm">Підтвердити</string>
+    <string name="dismiss">Відмінити</string>
 </resources>

@@ -14,7 +14,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_height="match_parent">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/colorItems"
+            app:cardCornerRadius="10dp">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,6 +29,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/group_name"
                 android:layout_marginStart="20dp"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Style.TextView"
@@ -31,6 +38,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/group_course"
                 android:layout_marginStart="10dp"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Style.TextView"
@@ -39,9 +47,11 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
                 android:layout_marginStart="270dp"
                 android:background="@drawable/ic_edit"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
+        </com.google.android.material.card.MaterialCardView>
     </FrameLayout>
 
 </layout>

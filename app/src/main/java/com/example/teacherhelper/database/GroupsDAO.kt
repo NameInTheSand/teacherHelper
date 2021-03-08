@@ -1,21 +1,23 @@
 package com.example.teacherhelper.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
 interface GroupsDAO {
     @Query("SELECT * from groups")
-    fun getAllGroups(): List<Groups>
+    fun getAllGroups(): LiveData<List<Groups>>
 
     @Query("SELECT * from groups WHERE name LIKE :search ")
-    fun getSearch(search: String?): List<Groups>
+    suspend fun getSearch(search: String?):List<Groups>
 
     @Query("DELETE FROM groups")
-    fun nukeTable()
+    suspend fun nukeTable()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(groups: Groups)
+    suspend fun insert(groups: Groups)
+
+    @Delete()
+    suspend fun deleteGroup(groups: Groups)
+
 }
