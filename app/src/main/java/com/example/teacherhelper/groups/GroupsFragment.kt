@@ -66,6 +66,7 @@ class GroupsFragment : Fragment() {
         }
         binding.searchButton.setOnClickListener {
             hideKeyboardFrom(requireContext(),binding.searchButton)
+            binding.searchInput.clearFocus()
             viewModel.viewModelScope.launch {
                 viewModel.search(binding.searchInput.text.toString())
                 delay(1000L)
