@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +22,7 @@ import com.example.teacherhelper.database.GroupsDAO
 import com.example.teacherhelper.database.GruopsRepository
 import com.example.teacherhelper.databinding.FragmentGroupsBinding
 import com.example.teacherhelper.factories.ViewModelFactory
+import com.example.teacherhelper.navigation.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.delay
@@ -58,7 +58,8 @@ class GroupsFragment : Fragment() {
         binding.groupsRecyclerView.layoutManager = LinearLayoutManager(context)
         setGroupsList()
     }
-    private fun setGroupsList(){
+
+    private fun setGroupsList() {
         viewModel.groups.observe(viewLifecycleOwner, Observer {
             binding.groupsRecyclerView.adapter = GroupsAdapter(it) { selectedItem: Groups ->
                 itemClicked(
@@ -67,12 +68,13 @@ class GroupsFragment : Fragment() {
             }
         })
     }
+
     private fun attachListeners() {
         binding.addButton.setOnClickListener {
             openDialog()
         }
         binding.searchButton.setOnClickListener {
-            hideKeyboardFrom(requireContext(),binding.searchButton)
+            hideKeyboardFrom(requireContext(), binding.searchButton)
             binding.searchInput.clearFocus()
             viewModel.viewModelScope.launch {
                 viewModel.search(binding.searchInput.text.toString())
@@ -84,13 +86,13 @@ class GroupsFragment : Fragment() {
                     )
                 }
                 binding.searchInput.text = null
-                binding.addButton.visibility= View.GONE
+                binding.addButton.visibility = View.GONE
             }
         }
         binding.backButton.setOnClickListener {
             setupRecyclerView()
             binding.searchInput.text = null
-            binding.addButton.visibility= View.VISIBLE
+            binding.addButton.visibility = View.VISIBLE
         }
     }
 
@@ -110,21 +112,29 @@ class GroupsFragment : Fragment() {
             alertDialog.dismiss()
         }
         dialogView.findViewById<MaterialButton>(R.id.confirm_button).setOnClickListener {
-            var name:String
-            var course:Int
-            if (!dialogView.findViewById<TextInputEditText>(R.id.group_enter_filed).text.toString().isNullOrEmpty()||
-                !dialogView.findViewById<TextInputEditText>(R.id.course_enter_filed).text.toString().isNullOrEmpty()){
-                name= dialogView.findViewById<TextInputEditText>(R.id.group_enter_filed).text.toString()
-                course = dialogView.findViewById<TextInputEditText>(R.id.course_enter_filed).text.toString().toInt()
+            var name: String
+            var course: Int
+            if (!dialogView.findViewById<TextInputEditText>(R.id.group_enter_filed).text.toString()
+                    .isNullOrEmpty() ||
+                !dialogView.findViewById<TextInputEditText>(R.id.course_enter_filed).text.toString()
+                    .isNullOrEmpty()
+            ) {
+                name =
+                    dialogView.findViewById<TextInputEditText>(R.id.group_enter_filed).text.toString()
+                course =
+                    dialogView.findViewById<TextInputEditText>(R.id.course_enter_filed).text.toString()
+                        .toInt()
                 viewModel.insert(Groups(name = name, course = course))
-                }
-            else {
+            } else {
                 Toast.makeText(context, "Будь ласка, введіть данні", Toast.LENGTH_SHORT).show()
             }
             alertDialog.dismiss()
         }
     }
-    private fun itemClicked(groups: Groups){
-        Toast.makeText(context, "вибране ім'я ${groups.name}", Toast.LENGTH_SHORT).show()
+
+    private fun itemClicked(groups: Groups) {
+       findNavController(R.id.groups_fragment)?.navigate(
+           GroupsFragmentDirections.groupInfo(groups.name,groups.course)
+       )
     }
 }

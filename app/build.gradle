@@ -3,6 +3,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id "kotlin-kapt"
+
+    id "androidx.navigation.safeargs.kotlin"
+
 }
 
 android {
@@ -43,6 +46,8 @@ dependencies {
     def lifecycle_version = "2.3.0"
     def arch_version = "2.1.0"
     def room_version = "2.2.6"
+    def nav_version = "2.3.3"
+
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -55,6 +60,8 @@ dependencies {
     // optional - helpers for implementing LifecycleOwner in a Service
     implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"
     // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
@@ -74,4 +81,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    apply plugin: "androidx.navigation.safeargs.kotlin"
 }

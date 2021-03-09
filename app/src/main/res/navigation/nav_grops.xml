@@ -8,5 +8,23 @@
         android:id="@+id/groups_fragment"
         android:name="com.example.teacherhelper.groups.GroupsFragment"
         android:label="@null"
-        tools:layout="@layout/fragment_groups"/>
+        tools:layout="@layout/fragment_groups">
+        <action
+            android:id="@+id/group_info"
+            app:destination="@+id/group_view"/>
+    </fragment>
+    <fragment
+        android:id="@+id/group_view"
+        android:name="com.example.teacherhelper.group.GroupViewFragment"
+        android:label="@null"
+        tools:layout="@layout/fragment_group_view">
+        <argument
+            android:name="group_name"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="group_course"
+            app:argType="integer"
+            />
+    </fragment>
 </navigation>
