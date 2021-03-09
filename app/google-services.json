@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1030600931042",
+    "project_id": "teacherhelper-877ea",
+    "storage_bucket": "teacherhelper-877ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030600931042:android:6489181ab0a50e4b6c90bb",
+        "android_client_info": {
+          "package_name": "com.example.teacherhelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030600931042-1btvtg2obhg3836cmmdft5a26bjjt0vv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBUr2Y1GoIs74_9dZtsLLuH3wlpc_Eqls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030600931042-1btvtg2obhg3836cmmdft5a26bjjt0vv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
