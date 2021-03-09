@@ -12,7 +12,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.teacherhelper.R
 import com.example.teacherhelper.database.AppDatabase
@@ -39,6 +41,7 @@ class GroupsFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val dao: GroupsDAO = AppDatabase.getInstance(activity?.application!!).groupsDAO
@@ -57,7 +60,11 @@ class GroupsFragment : Fragment() {
     }
     private fun setGroupsList(){
         viewModel.groups.observe(viewLifecycleOwner, Observer {
-            binding.groupsRecyclerView.adapter = GroupsAdapter(it)
+            binding.groupsRecyclerView.adapter = GroupsAdapter(it) { selectedItem: Groups ->
+                itemClicked(
+                    selectedItem
+                )
+            }
         })
     }
     private fun attachListeners() {
@@ -71,7 +78,11 @@ class GroupsFragment : Fragment() {
                 viewModel.search(binding.searchInput.text.toString())
                 delay(1000L)
                 var search = viewModel.searchResult
-                binding.groupsRecyclerView.adapter = GroupsAdapter(search)
+                binding.groupsRecyclerView.adapter = GroupsAdapter(search) { selectedItem: Groups ->
+                    itemClicked(
+                        selectedItem
+                    )
+                }
                 binding.searchInput.text = null
                 binding.addButton.visibility= View.GONE
             }
@@ -112,5 +123,8 @@ class GroupsFragment : Fragment() {
             }
             alertDialog.dismiss()
         }
+    }
+    private fun itemClicked(groups: Groups){
+        Toast.makeText(context, "вибране ім'я ${groups.name}", Toast.LENGTH_SHORT).show()
     }
 }
