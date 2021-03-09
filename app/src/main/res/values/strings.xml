@@ -11,4 +11,5 @@
     <string name="group_name_hint">Введіть назву групи</string>
     <string name="group_course_hint">Введіть курс</string>
     <string name="date_picker_hint">Виберіть дату</string>
+    <string name="alert_send">Надіслати нагадування</string>
 </resources>

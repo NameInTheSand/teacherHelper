@@ -88,6 +88,19 @@
                     android:src="@drawable/ic_forward"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_marginTop="50dp"
+                android:id="@+id/testDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/send_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/alert_send"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </RelativeLayout>
 </layout>
