@@ -8,4 +8,7 @@
     <string name="confirm">Підтвердити</string>
     <string name="dismiss">Відмінити</string>
     <string name="add_group">Додати нову групу</string>
+    <string name="group_name_hint">Введіть назву групи</string>
+    <string name="group_course_hint">Введіть курс</string>
+    <string name="date_picker_hint">Виберіть дату</string>
 </resources>

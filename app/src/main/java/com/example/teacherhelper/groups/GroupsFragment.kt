@@ -79,7 +79,7 @@ class GroupsFragment : Fragment() {
             viewModel.viewModelScope.launch {
                 viewModel.search(binding.searchInput.text.toString())
                 delay(1000L)
-                var search = viewModel.searchResult
+                val search = viewModel.searchResult
                 binding.groupsRecyclerView.adapter = GroupsAdapter(search) { selectedItem: Groups ->
                     itemClicked(
                         selectedItem
