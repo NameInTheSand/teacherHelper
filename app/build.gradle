@@ -69,6 +69,8 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
+    //notify
+    implementation "io.karn:notify:1.4.0"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
