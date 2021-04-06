@@ -31,7 +31,7 @@ class AlertFragment : Fragment() {
     }
 
     private fun attachListenets() {
-        binding.sendButton.setOnClickListener {
+        binding.datePicker.setOnClickListener {
             if (!binding.nameInput.text.toString()
                     .isNullOrEmpty() && !binding.courseInput.text.toString().isNullOrEmpty()
             ) {
@@ -40,6 +40,9 @@ class AlertFragment : Fragment() {
                 alarmService = AlarmService(requireContext())
                 setAlarm { alarmService.setExactAlarm(it,title,message) }
             } else Toast.makeText(requireContext(), "Введіть усі данні", Toast.LENGTH_SHORT).show()
+        }
+        binding.sendButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Нагадування було успішно додано", Toast.LENGTH_SHORT).show()
         }
     }
 
