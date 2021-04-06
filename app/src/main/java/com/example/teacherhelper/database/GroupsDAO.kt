@@ -9,10 +9,13 @@ interface GroupsDAO {
     fun getAllGroups(): LiveData<List<Groups>>
 
     @Query("SELECT hours from groups")
-    fun getHours():LiveData<Int>
+    fun getHours(): LiveData<Int>
 
     @Query("SELECT * from groups WHERE name LIKE :search ")
-    suspend fun getSearch(search: String?):List<Groups>
+    suspend fun getSearch(search: String?): List<Groups>
+
+    @Query("UPDATE groups set hours =:newHours WHERE id LIKE :searchId")
+    suspend fun update(newHours:Int, searchId:Int)
 
     @Query("DELETE FROM groups")
     suspend fun nukeTable()

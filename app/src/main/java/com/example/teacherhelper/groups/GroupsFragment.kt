@@ -124,7 +124,7 @@ class GroupsFragment : Fragment() {
                 course =
                     dialogView.findViewById<TextInputEditText>(R.id.course_enter_filed).text.toString()
                         .toInt()
-                viewModel.insert(Groups(name = name, course = course))
+                viewModel.insert(Groups(name = name, course = course,hours = 0))
             } else {
                 Toast.makeText(context, "Будь ласка, введіть данні", Toast.LENGTH_SHORT).show()
             }

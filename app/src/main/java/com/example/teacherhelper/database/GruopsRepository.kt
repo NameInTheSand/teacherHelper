@@ -11,6 +11,9 @@ class GruopsRepository(private val dao: GroupsDAO) {
     suspend fun delete(groups: Groups){
         dao.deleteGroup(groups)
     }
+    suspend fun update(newHours:Int, searchId:Int){
+        dao.update(newHours,searchId)
+    }
     suspend fun nukeTable(){
         dao.nukeTable()
     }

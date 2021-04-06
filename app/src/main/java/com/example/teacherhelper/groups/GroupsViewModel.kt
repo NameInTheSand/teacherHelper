@@ -19,6 +19,9 @@ class GroupsViewModel(private val groupsRepository: GruopsRepository) : ViewMode
      fun insert(groups:Groups):Job = viewModelScope.launch {
         groupsRepository.insert(groups)
     }
+    fun addHour(newHours:Int, searchId:Int):Job = viewModelScope.launch {
+        groupsRepository.update(newHours,searchId)
+    }
     fun search(group: String?) {
         if(group.isNullOrEmpty()){
                 searchResult = groupsRepository.groups.value!!

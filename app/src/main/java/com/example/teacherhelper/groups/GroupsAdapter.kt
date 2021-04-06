@@ -30,6 +30,7 @@ class GroupsAdapter(private val allGroups: List<Groups>,private val clickListene
         fun bind(groups: Groups,clickListener:(Groups)->Unit) {
             binding.groupName.text = groups.name
             binding.groupCourse.text = groups.course.toString()
+            binding.hoursCount.text = groups.hours.toString()
             binding.itemGroup.setOnClickListener {
                 clickListener(groups)
             }
