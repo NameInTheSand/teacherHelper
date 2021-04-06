@@ -8,6 +8,9 @@ interface GroupsDAO {
     @Query("SELECT * from groups")
     fun getAllGroups(): LiveData<List<Groups>>
 
+    @Query("SELECT hours from groups")
+    fun getHours():LiveData<Int>
+
     @Query("SELECT * from groups WHERE name LIKE :search ")
     suspend fun getSearch(search: String?):List<Groups>
 
