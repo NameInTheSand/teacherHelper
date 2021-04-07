@@ -33,6 +33,13 @@ class GroupsFragment : Fragment() {
     private lateinit var binding: FragmentGroupsBinding
     private lateinit var viewModel: GroupsViewModel
 
+    private val institutionAdapter = GroupsAdapter().also { adapter ->
+            adapter.setOnItemClickListener { _, group ->
+                findNavController().navigate(GroupsFragmentDirections.groupInfo(group.name,group.course))
+            }
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,25 +55,16 @@ class GroupsFragment : Fragment() {
         val repository = GruopsRepository(dao)
         val factory = ViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(GroupsViewModel::class.java)
+        binding.groupsRecyclerView.adapter = institutionAdapter
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        observeViewModel(viewModel)
         setupRecyclerView()
         attachListeners()
     }
 
     private fun setupRecyclerView() {
         binding.groupsRecyclerView.layoutManager = LinearLayoutManager(context)
-        setGroupsList()
-    }
-
-    private fun setGroupsList() {
-        viewModel.groups.observe(viewLifecycleOwner, Observer {
-            binding.groupsRecyclerView.adapter = GroupsAdapter(it) { selectedItem: Groups ->
-                itemClicked(
-                    selectedItem
-                )
-            }
-        })
     }
 
     private fun attachListeners() {
@@ -80,11 +78,7 @@ class GroupsFragment : Fragment() {
                 viewModel.search(binding.searchInput.text.toString())
                 delay(1000L)
                 val search = viewModel.searchResult
-                binding.groupsRecyclerView.adapter = GroupsAdapter(search) { selectedItem: Groups ->
-                    itemClicked(
-                        selectedItem
-                    )
-                }
+                institutionAdapter.notifyData(search)
                 binding.searchInput.text = null
                 binding.addButton.visibility = View.GONE
             }
@@ -132,9 +126,9 @@ class GroupsFragment : Fragment() {
         }
     }
 
-    private fun itemClicked(groups: Groups) {
-       findNavController(R.id.groups_fragment)?.navigate(
-           GroupsFragmentDirections.groupInfo(groups.name,groups.course)
-       )
+    private fun observeViewModel(viewModel: GroupsViewModel) {
+        viewModel.groups.observe(viewLifecycleOwner, {  delegateModel->
+            delegateModel.let { institutionAdapter.notifyData(it) }
+        })
     }
 }

@@ -10,6 +10,9 @@
         <variable
             name="adapter"
             type="com.example.teacherhelper.groups.GroupsAdapter" />
+        <variable
+            name="model"
+            type="com.example.teacherhelper.database.Groups" />
     </data>
 
     <FrameLayout
@@ -39,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:textColor="@color/white"
+                    android:text="@{model.name}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="ICT" />
@@ -50,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:textColor="@color/white"
+                    android:text="@{model.course}"
                     android:maxLength="3"
                     app:layout_constraintStart_toEndOf="@+id/group_name"
                     app:layout_constraintTop_toTopOf="parent"
@@ -73,6 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="40dp"
+                    android:text="@{model.hours}"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toStartOf="@+id/minus"
                     app:layout_constraintTop_toTopOf="parent"
