@@ -8,7 +8,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 
-@Database(entities = [Groups::class], version = 2)
+@Database(entities = [Groups::class, Student::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract val  groupsDAO : GroupsDAO
 
@@ -16,6 +16,11 @@ abstract class AppDatabase : RoomDatabase() {
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE Groups ADD COLUMN hours INTEGER DEFAULT 0 NOT NULL")
+            }
+        }
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE `Students` (`id` INTEGER DEFAULT 0 NOT NULL, `name` TEXT NOT NULL, `groupName` TEXT NOT NULL,  `surname` TEXT NOT NULL, PRIMARY KEY(`id`))")
             }
         }
         @Volatile
@@ -28,7 +33,7 @@ abstract class AppDatabase : RoomDatabase() {
                         context.applicationContext,
                         AppDatabase::class.java,
                         "groupsDatabase"
-                    ).addMigrations(MIGRATION_1_2)
+                    ).addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                         .build()
                 }
                 return instance
