@@ -37,6 +37,12 @@ class GroupsFragment : Fragment() {
             adapter.setOnItemClickListener { _, group ->
                 findNavController().navigate(GroupsFragmentDirections.groupInfo(group.name,group.course))
             }
+        adapter.setOnClickListenerMinus { _, groups ->
+            viewModel.addHour(groups.hours-1,groups.id)
+        }
+        adapter.setOnClickListenerPlus { _, groups ->
+            viewModel.addHour(groups.hours+1,groups.id)
+        }
 
     }
 
@@ -55,7 +61,6 @@ class GroupsFragment : Fragment() {
         val repository = GruopsRepository(dao)
         val factory = ViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(GroupsViewModel::class.java)
-        binding.groupsRecyclerView.adapter = institutionAdapter
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         observeViewModel(viewModel)
@@ -65,6 +70,7 @@ class GroupsFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.groupsRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.groupsRecyclerView.adapter = institutionAdapter
     }
 
     private fun attachListeners() {

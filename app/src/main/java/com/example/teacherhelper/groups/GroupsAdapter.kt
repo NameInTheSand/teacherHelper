@@ -11,14 +11,14 @@ import com.example.teacherhelper.databinding.ItemGroupBinding
 import com.example.teacherhelper.utils.AbsAdapter
 import com.example.teacherhelper.utils.inflate
 
-class GroupsAdapter : AbsAdapter<Groups, GroupsAdapter.groupViewHolder>() {
+class GroupsAdapter : AbsAdapter<Groups, GroupsAdapter.GroupViewHolder>() {
 
     private var onClickListener: OnClickListener<Groups>? = null
     private var onClickListenerMinus: OnClickListener<Groups>? = null
     private var onClickListenerPlus: OnClickListener<Groups>? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): groupViewHolder {
-        return groupViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
+        return GroupViewHolder(
             parent.context.inflate(
                 R.layout.item_group,
                 parent,
@@ -36,7 +36,7 @@ class GroupsAdapter : AbsAdapter<Groups, GroupsAdapter.groupViewHolder>() {
     }
 
     fun onClickListenerPlus(view: View, group: Groups) {
-        onClickListenerMinus?.onClick(getItemPosition(group), view, group)
+        onClickListenerPlus?.onClick(getItemPosition(group), view, group)
     }
 
     fun setOnItemClickListener(callback: (Int, Groups) -> Unit) {
@@ -63,19 +63,19 @@ class GroupsAdapter : AbsAdapter<Groups, GroupsAdapter.groupViewHolder>() {
         }
     }
 
-    override fun onBindViewHolder(holder: groupViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
        holder.bind(getItem(position))
     }
 
 
-    class groupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var binding: ItemGroupBinding? = DataBindingUtil.bind(itemView)
             private set
 
         fun bind(model: Groups?) {
             if (model != null) {
                 binding?.setVariable(BR.model, model)
-                binding?.setVariable(BR.adapter,GroupsAdapter)
+                binding?.setVariable(BR.adapter,this@GroupsAdapter)
                 binding?.executePendingBindings()
             }
         }

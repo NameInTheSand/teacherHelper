@@ -10,6 +10,7 @@
         <variable
             name="adapter"
             type="com.example.teacherhelper.groups.GroupsAdapter" />
+
         <variable
             name="model"
             type="com.example.teacherhelper.database.Groups" />
@@ -38,11 +39,11 @@
                     android:id="@+id/group_name"
                     style="@style/Style.TextView"
                     android:layout_width="wrap_content"
-                    android:maxLength="3"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:textColor="@color/white"
+                    android:maxLength="3"
                     android:text="@{model.name}"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="ICT" />
@@ -53,9 +54,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:textColor="@color/white"
-                    android:text="@{model.course}"
                     android:maxLength="3"
+                    android:text="@{String.valueOf(model.course)}"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toEndOf="@+id/group_name"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="41" />
@@ -78,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="40dp"
-                    android:text="@{model.hours}"
+                    android:text="@{String.valueOf(model.hours)}"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toStartOf="@+id/minus"
                     app:layout_constraintTop_toTopOf="parent"
@@ -88,9 +89,10 @@
                     android:id="@+id/minus"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginEnd="40dp"
                     android:background="@drawable/ic_minus"
                     android:backgroundTint="@color/white"
+                    android:onClick="@{(v) -> adapter.onClickListenerMinus(v, model)}"
                     android:scaleType="fitCenter"
                     app:layout_constraintEnd_toStartOf="@id/plus" />
 
@@ -99,8 +101,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="8dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/ic_plus"
                     android:backgroundTint="@color/white"
+                    android:onClick="@{(v) -> adapter.onClickListenerPlus(v, model)}"
                     android:scaleType="fitCenter"
                     app:layout_constraintEnd_toStartOf="@id/edit_group" />
 
@@ -108,9 +112,10 @@
                     android:id="@+id/edit_group"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@drawable/ic_edit"
                     android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_edit"
                     android:backgroundTint="@color/white"
+                    android:onClick="@{(v) -> adapter.onItemClicked(v, model)}"
                     android:scaleType="fitCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
