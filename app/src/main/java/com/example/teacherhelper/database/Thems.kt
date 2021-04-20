@@ -3,10 +3,11 @@ package com.example.teacherhelper.database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
-data class Groups(
+@Entity(tableName = "thems")
+data class Thems(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val mark: Int,
     val name: String,
-    val course: Int,
-    val hours: Int = 0
+    val maxMark: Int,
+    val groupName: String
 )

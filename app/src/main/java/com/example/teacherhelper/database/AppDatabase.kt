@@ -8,7 +8,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 
-@Database(entities = [Groups::class, Student::class], version = 3)
+@Database(entities = [Groups::class, Student::class, Thems::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
     abstract val  groupsDAO : GroupsDAO
 
@@ -23,6 +23,11 @@ abstract class AppDatabase : RoomDatabase() {
                 database.execSQL("CREATE TABLE `Students` (`id` INTEGER DEFAULT 0 NOT NULL, `name` TEXT NOT NULL, `groupName` TEXT NOT NULL,  `surname` TEXT NOT NULL, PRIMARY KEY(`id`))")
             }
         }
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE `Thems` (`id` INTEGER DEFAULT 0 NOT NULL, `mark` INTEGER NOT NULL, `name` TEXT NOT NULL, `groupName` TEXT NOT NULL,  `maxMark` INTEGER NOT NULL, PRIMARY KEY(`id`))")
+            }
+        }
         @Volatile
         private var INSTANCE:AppDatabase? = null
         fun getInstance(context: Context):AppDatabase{
@@ -33,7 +38,7 @@ abstract class AppDatabase : RoomDatabase() {
                         context.applicationContext,
                         AppDatabase::class.java,
                         "groupsDatabase"
-                    ).addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                         .build()
                 }
                 return instance
