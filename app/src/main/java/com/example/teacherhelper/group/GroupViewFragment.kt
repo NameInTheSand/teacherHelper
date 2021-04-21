@@ -17,6 +17,7 @@ import com.example.teacherhelper.database.*
 import com.example.teacherhelper.databinding.FragmentGroupViewBinding
 import com.example.teacherhelper.factories.ViewModelFactory
 import com.example.teacherhelper.groups.GroupsViewModel
+import com.example.teacherhelper.utils.sendValue
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
@@ -56,7 +57,6 @@ class GroupViewFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(GroupViewFragmentVM::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.getStudents(args.groupId)
         setupRecyclerView()
         observeViewModel(viewModel)
         attachListeners()
@@ -73,8 +73,16 @@ class GroupViewFragment : Fragment() {
     }
 
     private fun observeViewModel(viewModel: GroupViewFragmentVM) {
-        viewModel.studentList.observe(viewLifecycleOwner, {  delegateModel->
-            institutionAdapter.notifyData(delegateModel)
+        var list:MutableList<StudentModel> = mutableListOf()
+        viewModel.students.observe(viewLifecycleOwner,{
+            var filteredList =it.filter {
+                it.groupName==args.groupId
+            }
+            filteredList.forEach {
+               list.add(StudentModel(it,"40/100"))
+            }
+            institutionAdapter.notifyData(list)
+            list.clear()
         })
     }
 
@@ -103,7 +111,6 @@ class GroupViewFragment : Fragment() {
             } else {
                 Toast.makeText(context, "Будь ласка, введіть данні", Toast.LENGTH_SHORT).show()
             }
-            viewModel.getStudents(args.groupId)
             alertDialog.dismiss()
         }
     }

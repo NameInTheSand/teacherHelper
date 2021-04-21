@@ -15,24 +15,10 @@ import kotlinx.coroutines.launch
 
 class GroupViewFragmentVM(private val groupsRepository: GruopsRepository) :
     ViewModel(), Observable {
-
-    val _studentsList = MutableLiveData<List<StudentModel>>()
-    val studentList: LiveData<List<StudentModel>> = _studentsList
+    val students = groupsRepository.students
 
     fun insert(student: Student): Job = viewModelScope.launch {
         groupsRepository.insertStudent(student)
-    }
-    fun getStudents(id: String) {
-
-        var list:MutableList<StudentModel> = mutableListOf()
-        viewModelScope.launch {
-                groupsRepository.getGroupStudents(id).let {
-                    it.forEach {
-                        list.add(StudentModel(it,"10/10"))
-                    }
-                    _studentsList.sendValue(list)
-                }
-        }
     }
 
 
