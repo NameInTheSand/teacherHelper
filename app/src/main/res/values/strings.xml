@@ -13,4 +13,7 @@
     <string name="date_picker_hint">Виберіть дату</string>
     <string name="alert_send">Надіслати нагадування</string>
     <string name="hours_hint">Години</string>
+    <string name="to_thems">До тем</string>
+    <string name="add_student">Додати студента</string>
+    <string name="marks">%1$s/%2$s</string>
 </resources>

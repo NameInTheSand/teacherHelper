@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,23 +11,47 @@
             type="com.example.teacherhelper.group.GroupViewFragmentVM" />
 
     </data>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<com.google.android.material.textview.MaterialTextView
-    android:id="@+id/name_tv"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    tools:text="kjdfgjdfk"
-    />
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/name_course"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/name_tv"
-        tools:text="вапвап"
-        />
-</RelativeLayout>
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/student_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:text="@string/add_group"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/to_thems"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:backgroundTint="@color/black"
+                android:text="@string/to_thems"
+                app:cardBackgroundColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/add_button" />
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

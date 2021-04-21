@@ -35,7 +35,7 @@ class GroupsFragment : Fragment() {
 
     private val institutionAdapter = GroupsAdapter().also { adapter ->
             adapter.setOnItemClickListener { _, group ->
-                findNavController().navigate(GroupsFragmentDirections.groupInfo(group.name,group.course))
+                findNavController().navigate(GroupsFragmentDirections.groupInfo(group.id.toString()))
             }
         adapter.setOnClickListenerMinus { _, groups ->
             viewModel.addHour(groups.hours-1,groups.id)

@@ -27,11 +27,11 @@ class GruopsRepository(private val dao: GroupsDAO) {
         dao.getHours()
     }
 
-    suspend fun getGroupStudents(id: String) {
-        dao.getGroupStudents(id)
+    suspend fun getGroupStudents(id: String): List<Student> {
+        return dao.getGroupStudents(id)
     }
 
-    suspend fun getGroupThems(id: String) {
-        dao.getGroupThems(id)
+    suspend fun getGroupThems(id: String): List<Thems> {
+        return dao.getGroupThems(id)
     }
 }

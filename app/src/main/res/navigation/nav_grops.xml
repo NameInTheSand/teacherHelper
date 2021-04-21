@@ -19,12 +19,8 @@
         android:label="@null"
         tools:layout="@layout/fragment_group_view">
         <argument
-            android:name="group_name"
+            android:name="group_id"
             app:argType="string"
             app:nullable="false"/>
-        <argument
-            android:name="group_course"
-            app:argType="integer"
-            />
     </fragment>
 </navigation>
