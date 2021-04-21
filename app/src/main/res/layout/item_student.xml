@@ -43,6 +43,7 @@
                     android:layout_marginStart="20dp"
                     android:text="@{model.student.name}"
                     android:textColor="@color/white"
+                    android:maxLength="10"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -53,11 +54,12 @@
                     style="@style/Style.TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:text="@{model.student.surname}"
                     android:textColor="@color/white"
+                    android:maxLength="10"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/student_name"
+                    app:layout_constraintEnd_toStartOf="@+id/total_marks"
+                    app:layout_constraintStart_toEndOf="@id/student_name"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Light" />
 

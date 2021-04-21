@@ -30,13 +30,19 @@ interface GroupsDAO {
     suspend fun insert(groups: Groups)
 
     @Query("SELECT * from students WHERE groupName LIKE :search ")
-    suspend fun getGroupStudents(search: String?): List<Student>
+    suspend fun getGroupStudentsFromGroup(search: String?): List<Student>
+
+    @Query("SELECT * from students")
+    fun getGroupStudentsAll(): LiveData<List<Student>>
 
     @Query("SELECT * from Thems WHERE groupName LIKE :search ")
     suspend fun getGroupThems(search: String?): List<Thems>
 
+    @Query("SELECT * from Thems WHERE groupName LIKE :search AND studentId LIKE :studentId ")
+    suspend fun getGroupThemsFroStudent(search: String?, studentId: String?): List<Thems>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertGroup(student: Student)
+    suspend fun insertStudent(student: Student)
 
     @Query("DELETE FROM groups WHERE id LIKE :searchId ")
     suspend fun deleteStudent(searchId: String?)

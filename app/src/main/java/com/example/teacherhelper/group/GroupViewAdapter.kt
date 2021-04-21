@@ -6,9 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teacherhelper.BR
 import com.example.teacherhelper.R
-import com.example.teacherhelper.database.Groups
 import com.example.teacherhelper.database.Student
-import com.example.teacherhelper.databinding.ItemGroupBinding
+import com.example.teacherhelper.databinding.ItemStudentBinding
 import com.example.teacherhelper.utils.AbsAdapter
 import com.example.teacherhelper.utils.inflate
 
@@ -47,7 +46,7 @@ class GroupViewAdapter : AbsAdapter<StudentModel, GroupViewAdapter.StudentViewHo
     }
 
     inner class StudentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var binding: ItemGroupBinding? = DataBindingUtil.bind(itemView)
+        var binding: ItemStudentBinding? = DataBindingUtil.bind(itemView)
             private set
 
         fun bind(model: StudentModel?) {

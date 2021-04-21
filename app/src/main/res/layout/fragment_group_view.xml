@@ -21,9 +21,11 @@
             android:id="@+id/student_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/buttons"
             android:orientation="vertical" />
 
         <LinearLayout
+            android:id="@+id/buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -36,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="50"
-                android:text="@string/add_group"
+                android:text="@string/add_student"
                 app:cardBackgroundColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

@@ -9,5 +9,6 @@ data class Thems(
     val mark: Int,
     val name: String,
     val maxMark: Int,
-    val groupName: String
+    val groupName: String,
+    val studentId:String?,
 )

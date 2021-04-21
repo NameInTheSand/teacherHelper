@@ -2,6 +2,7 @@ package com.example.teacherhelper.database
 
 class GruopsRepository(private val dao: GroupsDAO) {
     val groups = dao.getAllGroups()
+    val students = dao.getGroupStudentsAll()
 
     suspend fun insert(groups: Groups) {
         dao.insert(groups)
@@ -27,11 +28,19 @@ class GruopsRepository(private val dao: GroupsDAO) {
         dao.getHours()
     }
 
-    suspend fun getGroupStudents(id: String): List<Student> {
-        return dao.getGroupStudents(id)
+    suspend fun insertStudent(student: Student){
+        dao.insertStudent(student)
+    }
+
+     suspend fun getGroupStudents(id: String): List<Student> {
+        return dao.getGroupStudentsFromGroup(id)
     }
 
     suspend fun getGroupThems(id: String): List<Thems> {
         return dao.getGroupThems(id)
+    }
+
+    suspend fun getGroupThemsFroStudent(search: String?, studentId: String?) : List<Thems>{
+            return dao.getGroupThemsFroStudent(search,studentId)
     }
 }
