@@ -3,6 +3,7 @@ package com.example.teacherhelper.database
 class GruopsRepository(private val dao: GroupsDAO) {
     val groups = dao.getAllGroups()
     val students = dao.getGroupStudentsAll()
+    val thems = dao.getThems()
 
     suspend fun insert(groups: Groups) {
         dao.insert(groups)
@@ -30,6 +31,10 @@ class GruopsRepository(private val dao: GroupsDAO) {
 
     suspend fun insertStudent(student: Student){
         dao.insertStudent(student)
+    }
+
+    suspend fun insertThemes(thems: Thems){
+        dao.insertTheme(thems)
     }
 
      suspend fun getGroupStudents(id: String): List<Student> {

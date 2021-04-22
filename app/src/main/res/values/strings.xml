@@ -17,4 +17,6 @@
     <string name="hours_hint">Години</string>
     <string name="to_thems">Додати тему</string>
     <string name="add_student">Додати студента</string>
+    <string name="theme_name_enter">Введіть назву теми</string>
+    <string name="theme_mark_enter">Введіть максимальний бал</string>
 </resources>

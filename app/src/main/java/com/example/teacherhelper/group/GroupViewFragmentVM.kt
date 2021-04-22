@@ -1,5 +1,6 @@
 package com.example.teacherhelper.group
 
+import android.util.Log
 import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacherhelper.database.Groups
 import com.example.teacherhelper.database.GruopsRepository
 import com.example.teacherhelper.database.Student
+import com.example.teacherhelper.database.Thems
 import com.example.teacherhelper.utils.ioContext
 import com.example.teacherhelper.utils.sendValue
 import kotlinx.coroutines.Job
@@ -16,9 +18,14 @@ import kotlinx.coroutines.launch
 class GroupViewFragmentVM(private val groupsRepository: GruopsRepository) :
     ViewModel(), Observable {
     val students = groupsRepository.students
+    val thems = groupsRepository.thems
 
-    fun insert(student: Student): Job = viewModelScope.launch {
+    fun insertStudent(student: Student): Job = viewModelScope.launch {
         groupsRepository.insertStudent(student)
+    }
+
+    fun insertTheme(thems: Thems): Job = viewModelScope.launch {
+        groupsRepository.insertThemes(thems)
     }
 
 
