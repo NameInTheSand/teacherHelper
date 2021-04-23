@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="15dp">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ExpandableListView
             android:id="@+id/student_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

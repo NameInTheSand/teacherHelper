@@ -2,60 +2,79 @@ package com.example.teacherhelper.group
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseExpandableListAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.example.teacherhelper.BR
 import com.example.teacherhelper.R
-import com.example.teacherhelper.database.Student
+import com.example.teacherhelper.database.Thems
 import com.example.teacherhelper.databinding.ItemStudentBinding
-import com.example.teacherhelper.utils.AbsAdapter
+import com.example.teacherhelper.databinding.ItemThemeBinding
 import com.example.teacherhelper.utils.inflate
 
-class GroupViewAdapter : AbsAdapter<StudentModel, GroupViewAdapter.StudentViewHolder>() {
+class GroupViewAdapter(
+    private var students: List<StudentModel>,
+    private var theme: HashMap<StudentModel, List<Thems>>
+) : BaseExpandableListAdapter() {
 
-    private var onClickListener: OnClickListener<Student>? = null
 
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): GroupViewAdapter.StudentViewHolder {
-        return StudentViewHolder(
-            parent.context.inflate(
-                R.layout.item_student,
-                parent,
-                false
-            )
-        )
+    override fun getGroupCount(): Int {
+        return students.size
     }
 
-    fun onItemClicked(view: View, student: StudentModel) {
-        onClickListener?.onClick(getItemPosition(student), view, student.student)
+    override fun getChildrenCount(p0: Int): Int {
+        return theme[students[p0]]!!.size
     }
 
-    fun setOnItemClickListener(callback: (Int, Student) -> Unit) {
-        onClickListener = object : OnClickListener<Student> {
-            override fun onClick(position: Int, view: View, item: Student) {
-                callback(position, item)
-            }
+    override fun getGroup(p0: Int): Any {
+        return students[p0]
+    }
+
+    override fun getChild(p0: Int, p1: Int): Thems? {
+        return theme[students[p0]]?.get(p1)
+    }
+
+    override fun getGroupId(p0: Int): Long {
+        return 0
+    }
+
+    override fun getChildId(p0: Int, p1: Int): Long {
+        return 0
+    }
+
+    override fun hasStableIds(): Boolean {
+        return false
+    }
+
+    override fun getGroupView(p0: Int, p1: Boolean, p2: View?, p3: ViewGroup?): View {
+        val view = p3?.context?.inflate(
+            R.layout.item_student,
+            p3,
+            false
+        )!!
+        val binding: ItemStudentBinding = DataBindingUtil.bind(view)!!
+        binding.model = students[p0]
+        binding.executePendingBindings()
+        return view
+    }
+
+    override fun getChildView(p0: Int, p1: Int, p2: Boolean, p3: View?, p4: ViewGroup?): View {
+        val view = p4?.context?.inflate(
+            R.layout.item_theme,
+            p4,
+            false
+        )!!
+        val binding: ItemThemeBinding = DataBindingUtil.bind(view)!!
+        binding.model = getChild(p0, p1)
+        binding.executePendingBindings()
+        binding.itemGroup.setOnClickListener {
+            Toast.makeText(p4?.context, getChild(p0, p1)?.name, Toast.LENGTH_SHORT).show()
         }
+        return view
     }
 
-    override fun onBindViewHolder(holder: GroupViewAdapter.StudentViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun isChildSelectable(p0: Int, p1: Int): Boolean {
+        return true
     }
 
-    inner class StudentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var binding: ItemStudentBinding? = DataBindingUtil.bind(itemView)
-            private set
-
-        fun bind(model: StudentModel?) {
-            if (model != null) {
-                binding?.setVariable(BR.model, model)
-                binding?.setVariable(BR.adapter, this@GroupViewAdapter)
-                binding?.executePendingBindings()
-            }
-        }
-    }
 
 }
