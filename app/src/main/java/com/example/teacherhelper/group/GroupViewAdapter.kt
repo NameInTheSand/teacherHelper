@@ -67,7 +67,7 @@ class GroupViewAdapter(
         binding.model = getChild(p0, p1)
         binding.executePendingBindings()
         binding.itemGroup.setOnClickListener {
-            Toast.makeText(p4?.context, getChild(p0, p1)?.name, Toast.LENGTH_SHORT).show()
+            Toast.makeText(p4.context, getChild(p0, p1)?.name, Toast.LENGTH_SHORT).show()
         }
         return view
     }
