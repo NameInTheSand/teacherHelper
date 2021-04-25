@@ -94,21 +94,34 @@ class GroupViewFragment : Fragment() {
                     filteredThemsList = listThems.filter {
                         it.studentId == student.id.toString()
                     }
-                    if (filteredThemsList.isNullOrEmpty()){
-                        val allGroupThems = viewModel.thems.value?.filter {
-                            it.groupName==args.groupId
+                    if (filteredThemsList.isNullOrEmpty()) {
+                        val allGroupThems = listThems.filter {
+                            it.groupName == args.groupId
                         }
-                        var allGroupThemsWithoutRepeat:MutableList<Thems> = mutableListOf()
-                        if(!allGroupThems.isNullOrEmpty()) allGroupThemsWithoutRepeat.add(
-                            allGroupThems[0]
-                        )
-                        allGroupThems?.forEach { theme->
-                            allGroupThemsWithoutRepeat.forEach {
-                                if(theme.name!=it.name) allGroupThemsWithoutRepeat.add(it)
+                        if (!allGroupThems.isNullOrEmpty()) {
+                            var allGroupThemsWithoutRepeat: MutableList<Thems> = mutableListOf()
+                            allGroupThemsWithoutRepeat.add(allGroupThems[0])
+                            var themeName: MutableList<String> = mutableListOf()
+                            themeName.add(allGroupThems[0].name)
+                            allGroupThems.forEach { theme ->
+                                if (!themeName.contains(theme.name)) {
+                                    allGroupThemsWithoutRepeat.add(theme)
+                                    themeName.add(theme.name)
+                                }
                             }
-                        }
-                        allGroupThemsWithoutRepeat.forEach {
-                            viewModel.insertTheme(Thems(mark=0,maxMark = it.maxMark,name = it.name,groupName = it.groupName,studentId = student.id.toString()))
+                            allGroupThemsWithoutRepeat.forEach {
+                                viewModel.insertTheme(
+                                    Thems(
+                                        mark = 0,
+                                        maxMark = it.maxMark,
+                                        name = it.name,
+                                        groupName = it.groupName,
+                                        studentId = student.id.toString()
+                                    )
+                                )
+                            }
+                            allGroupThemsWithoutRepeat.clear()
+                            themeName.clear()
                         }
                         filteredThemsList = listThems.filter {
                             it.studentId == student.id.toString()
@@ -125,7 +138,7 @@ class GroupViewFragment : Fragment() {
                             StudentModel(student, "$mark/$maxMark", passed),
                             filteredThemsList
                         )
-                    }
+                        }
                 }
                 binding.studentRv.setAdapter(GroupViewAdapter(list, theme))
             }
