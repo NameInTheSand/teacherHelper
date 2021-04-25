@@ -28,6 +28,7 @@ class GroupViewFragment : Fragment() {
     var listThems: List<Thems> = mutableListOf()
     var filteredThemsList: List<Thems> = mutableListOf()
     var theme: HashMap<StudentModel, List<Thems>> = HashMap()
+    var studentAdded = false
 
 
     private val args by navArgs<GroupViewFragmentArgs>()
@@ -55,7 +56,6 @@ class GroupViewFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(GroupViewFragmentVM::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        setupExpandView()
         attachListeners()
     }
 
@@ -71,13 +71,84 @@ class GroupViewFragment : Fragment() {
         binding.addTheme.setOnClickListener {
             openDialogThemeAdd()
         }
+        binding.refresh.setOnRefreshListener {
+            list.clear()
+            theme.clear()
+            binding.refresh.isRefreshing=true
+            refresh()
+            binding.refresh.isRefreshing=false
+        }
     }
+    fun refresh(){
+        viewModel.students.value.let {
+            if (!it.isNullOrEmpty()) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    var filteredList = it.filter {
+                        it.groupName == args.groupId
+                    }
+                    filteredList.forEach { student ->
+                        var mark = 0
+                        var maxMark = 0
+                        var passed = false
+                        delay(20L)
+                        filteredThemsList = listThems.filter {
+                            it.studentId == student.id.toString()
+                        }
+                        if (filteredThemsList.isNullOrEmpty()) {
+                            val allGroupThems = listThems.filter {
+                                it.groupName == args.groupId
+                            }
+                            if (!allGroupThems.isNullOrEmpty()) {
+                                var allGroupThemsWithoutRepeat: MutableList<Thems> =
+                                    mutableListOf()
+                                allGroupThemsWithoutRepeat.add(allGroupThems[0])
+                                var themeName: MutableList<String> = mutableListOf()
+                                themeName.add(allGroupThems[0].name)
+                                allGroupThems.forEach { theme ->
+                                    if (!themeName.contains(theme.name)) {
+                                        allGroupThemsWithoutRepeat.add(theme)
+                                        themeName.add(theme.name)
+                                    }
+                                }
+                                allGroupThemsWithoutRepeat.forEach {
+                                    viewModel.insertTheme(
+                                        Thems(
+                                            mark = 0,
+                                            maxMark = it.maxMark,
+                                            name = it.name,
+                                            groupName = it.groupName,
+                                            studentId = student.id.toString()
+                                        )
+                                    )
+                                }
+                                allGroupThemsWithoutRepeat.clear()
+                                themeName.clear()
+                            }
+                            filteredThemsList = listThems.filter {
+                                it.studentId == student.id.toString()
+                            }
+                        }
+                        filteredThemsList.forEach {
+                            mark += it.mark
+                            maxMark += it.maxMark
+                        }
+                        if (mark != 0 && maxMark / mark >= 2) passed = true
+                        list.add(StudentModel(student, "$mark/$maxMark", passed))
+                        filteredThemsList.forEach {
+                            theme.put(
+                                StudentModel(student, "$mark/$maxMark", passed),
+                                filteredThemsList
+                            )
+                        }
+                    }
+                    binding.studentRv.setAdapter(GroupViewAdapter(list, theme))
+                }
 
-    private fun setupExpandView() {
+            }
+        }
     }
 
     private fun observeViewModel(viewModel: GroupViewFragmentVM) {
-
         viewModel.thems.observe(viewLifecycleOwner, {
             listThems = it
         })
@@ -144,6 +215,7 @@ class GroupViewFragment : Fragment() {
             }
         })
     }
+
 
     private fun openDialogStudentAdd() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_student, null)
