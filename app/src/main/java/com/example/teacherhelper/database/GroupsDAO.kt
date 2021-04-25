@@ -53,6 +53,12 @@ interface GroupsDAO {
     @Query("DELETE FROM groups WHERE id LIKE :searchId ")
     suspend fun deleteStudent(searchId: String?)
 
+    @Query("DELETE FROM students")
+    suspend fun deleteStudents()
+
+    @Query("DELETE FROM thems")
+    suspend fun deleteThems()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTheme(thems: Thems)
 

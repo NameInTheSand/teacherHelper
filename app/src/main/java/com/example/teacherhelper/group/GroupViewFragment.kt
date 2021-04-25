@@ -24,7 +24,10 @@ import kotlinx.coroutines.launch
 class GroupViewFragment : Fragment() {
     private lateinit var binding: FragmentGroupViewBinding
     private lateinit var viewModel: GroupViewFragmentVM
-
+    var list: MutableList<StudentModel> = mutableListOf()
+    var listThems: List<Thems> = mutableListOf()
+    var filteredThemsList: List<Thems> = mutableListOf()
+    var theme: HashMap<StudentModel, List<Thems>> = HashMap()
 
 
     private val args by navArgs<GroupViewFragmentArgs>()
@@ -53,8 +56,12 @@ class GroupViewFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         setupExpandView()
-        observeViewModel(viewModel)
         attachListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        observeViewModel(viewModel)
     }
 
     private fun attachListeners() {
@@ -70,10 +77,7 @@ class GroupViewFragment : Fragment() {
     }
 
     private fun observeViewModel(viewModel: GroupViewFragmentVM) {
-        var list: MutableList<StudentModel> = mutableListOf()
-        var listThems: List<Thems> = mutableListOf()
-        var filteredThemsList: List<Thems>
-        var theme: HashMap<StudentModel, List<Thems>> = HashMap()
+
         viewModel.thems.observe(viewLifecycleOwner, {
             listThems = it
         })
@@ -85,11 +89,30 @@ class GroupViewFragment : Fragment() {
                 filteredList.forEach { student ->
                     var mark = 0
                     var maxMark = 0
-                    var passed: Boolean = false
+                    var passed = false
                     delay(20L)
                     filteredThemsList = listThems.filter {
-//                        it.groupName == args.groupId
                         it.studentId == student.id.toString()
+                    }
+                    if (filteredThemsList.isNullOrEmpty()){
+                        val allGroupThems = viewModel.thems.value?.filter {
+                            it.groupName==args.groupId
+                        }
+                        var allGroupThemsWithoutRepeat:MutableList<Thems> = mutableListOf()
+                        if(!allGroupThems.isNullOrEmpty()) allGroupThemsWithoutRepeat.add(
+                            allGroupThems[0]
+                        )
+                        allGroupThems?.forEach { theme->
+                            allGroupThemsWithoutRepeat.forEach {
+                                if(theme.name!=it.name) allGroupThemsWithoutRepeat.add(it)
+                            }
+                        }
+                        allGroupThemsWithoutRepeat.forEach {
+                            viewModel.insertTheme(Thems(mark=0,maxMark = it.maxMark,name = it.name,groupName = it.groupName,studentId = student.id.toString()))
+                        }
+                        filteredThemsList = listThems.filter {
+                            it.studentId == student.id.toString()
+                        }
                     }
                     filteredThemsList.forEach {
                         mark += it.mark
@@ -97,7 +120,7 @@ class GroupViewFragment : Fragment() {
                     }
                     if (mark != 0 && maxMark / mark >= 2) passed = true
                     list.add(StudentModel(student, "$mark/$maxMark", passed))
-                    filteredThemsList.forEach {
+                    filteredThemsList.forEach{
                         theme.put(
                             StudentModel(student, "$mark/$maxMark", passed),
                             filteredThemsList
@@ -105,8 +128,6 @@ class GroupViewFragment : Fragment() {
                     }
                 }
                 binding.studentRv.setAdapter(GroupViewAdapter(list, theme))
-//                list.clear()
-//                theme.clear()
             }
         })
     }
@@ -139,6 +160,8 @@ class GroupViewFragment : Fragment() {
                         groupName = args.groupId
                     )
                 )
+                list.clear()
+                theme.clear()
             } else {
                 Toast.makeText(context, "Будь ласка, введіть данні", Toast.LENGTH_SHORT).show()
             }

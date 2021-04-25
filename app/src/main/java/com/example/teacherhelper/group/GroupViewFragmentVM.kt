@@ -27,6 +27,13 @@ class GroupViewFragmentVM(private val groupsRepository: GruopsRepository) :
     fun insertTheme(thems: Thems): Job = viewModelScope.launch {
         groupsRepository.insertThemes(thems)
     }
+    fun deleteStudents():Job = viewModelScope.launch {
+        groupsRepository.deleteStudents()
+    }
+
+    fun deleteThems():Job = viewModelScope.launch {
+        groupsRepository.deleteThems()
+    }
 
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {

@@ -21,8 +21,8 @@ class GruopsRepository(private val dao: GroupsDAO) {
         dao.nukeTable()
     }
 
-    suspend fun updateGroup(newName: String,newCourse:Int,searchId: Int){
-        dao.updateGroup(newName,newCourse,searchId)
+    suspend fun updateGroup(newName: String, newCourse: Int, searchId: Int) {
+        dao.updateGroup(newName, newCourse, searchId)
     }
 
     suspend fun search(group: String): List<Groups> {
@@ -33,15 +33,15 @@ class GruopsRepository(private val dao: GroupsDAO) {
         dao.getHours()
     }
 
-    suspend fun insertStudent(student: Student){
+    suspend fun insertStudent(student: Student) {
         dao.insertStudent(student)
     }
 
-    suspend fun insertThemes(thems: Thems){
+    suspend fun insertThemes(thems: Thems) {
         dao.insertTheme(thems)
     }
 
-     suspend fun getGroupStudents(id: String): List<Student> {
+    suspend fun getGroupStudents(id: String): List<Student> {
         return dao.getGroupStudentsFromGroup(id)
     }
 
@@ -49,7 +49,15 @@ class GruopsRepository(private val dao: GroupsDAO) {
         return dao.getGroupThems(id)
     }
 
-    suspend fun getGroupThemsFroStudent(search: String?, studentId: String?) : List<Thems>{
-            return dao.getGroupThemsFroStudent(search,studentId)
+    suspend fun getGroupThemsFroStudent(search: String?, studentId: String?): List<Thems> {
+        return dao.getGroupThemsFroStudent(search, studentId)
+    }
+
+    suspend fun deleteStudents() {
+        dao.deleteStudents()
+    }
+
+    suspend fun deleteThems() {
+        dao.deleteThems()
     }
 }
