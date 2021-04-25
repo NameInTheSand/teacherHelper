@@ -68,7 +68,7 @@
                     android:text="@{model.mark}"
                     android:layout_marginEnd="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/edit_group"
+                    app:layout_constraintEnd_toStartOf="@+id/passed"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="100/100" />
 
@@ -80,17 +80,6 @@
                     android:src="@{model.passed?@drawable/ic_passed:@drawable/ic_not_passed}"
                     android:scaleType="fitCenter"
                     tools:src="@drawable/ic_passed"
-                    app:layout_constraintEnd_toStartOf="@+id/edit_group"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/edit_group"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_edit"
-                    android:scaleType="fitCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

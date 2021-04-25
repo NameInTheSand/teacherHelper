@@ -34,6 +34,9 @@ class GroupsViewModel(private val groupsRepository: GruopsRepository) : ViewMode
         }
         }
     }
+    fun updateGroup(newName: String,newCourse:Int,searchId: Int):Job = viewModelScope.launch {
+        groupsRepository.updateGroup(newName,newCourse,searchId)
+    }
 
     fun nuketable() = viewModelScope.launch {
         groupsRepository.nukeTable()

@@ -21,6 +21,10 @@ class GruopsRepository(private val dao: GroupsDAO) {
         dao.nukeTable()
     }
 
+    suspend fun updateGroup(newName: String,newCourse:Int,searchId: Int){
+        dao.updateGroup(newName,newCourse,searchId)
+    }
+
     suspend fun search(group: String): List<Groups> {
         return dao.getSearch(group)
     }

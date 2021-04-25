@@ -1,10 +1,7 @@
 package com.example.teacherhelper.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface GroupsDAO {
@@ -19,6 +16,9 @@ interface GroupsDAO {
 
     @Query("UPDATE groups set hours =:newHours WHERE id LIKE :searchId")
     suspend fun update(newHours: Int, searchId: Int)
+
+    @Query("UPDATE groups set name=:newName, course=:newCourse WHERE id LIKE :searchId")
+    suspend fun updateGroup(newName: String,newCourse:Int,searchId: Int)
 
     @Query("DELETE FROM groups WHERE id LIKE :searchId ")
     suspend fun deleteGroup(searchId: String?)

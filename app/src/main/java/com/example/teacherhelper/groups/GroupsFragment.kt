@@ -43,7 +43,9 @@ class GroupsFragment : Fragment() {
         adapter.setOnClickListenerPlus { _, groups ->
             viewModel.addHour(groups.hours+1,groups.id)
         }
-
+        adapter.setOnClickListenerEdit { _, groups ->
+            openDialogEdit(groups)
+        }
     }
 
     override fun onCreateView(
@@ -125,6 +127,36 @@ class GroupsFragment : Fragment() {
                     dialogView.findViewById<TextInputEditText>(R.id.course_enter_filed).text.toString()
                         .toInt()
                 viewModel.insert(Groups(name = name, course = course,hours = 0))
+            } else {
+                Toast.makeText(context, "Будь ласка, введіть данні", Toast.LENGTH_SHORT).show()
+            }
+            alertDialog.dismiss()
+        }
+    }
+
+    private fun openDialogEdit(groups: Groups) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_group, null)
+        val builder = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setTitle("Редагування групи")
+        val alertDialog = builder.show()
+        dialogView.findViewById<TextInputEditText>(R.id.group_edit_filed).setText(groups.name)
+        dialogView.findViewById<TextInputEditText>(R.id.course_edit_filed).setText(groups.course.toString())
+        dialogView.findViewById<MaterialButton>(R.id.dismiss_button).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        dialogView.findViewById<MaterialButton>(R.id.confirm_button).setOnClickListener {
+            if (!dialogView.findViewById<TextInputEditText>(R.id.group_edit_filed).text.toString()
+                    .isNullOrEmpty() ||
+                !dialogView.findViewById<TextInputEditText>(R.id.course_edit_filed).text.toString()
+                    .isNullOrEmpty()
+            ) {
+                val name =
+                    dialogView.findViewById<TextInputEditText>(R.id.group_edit_filed).text.toString()
+                val course =
+                    dialogView.findViewById<TextInputEditText>(R.id.course_edit_filed).text.toString()
+                        .toInt()
+                viewModel.updateGroup(name,course,groups.id)
             } else {
                 Toast.makeText(context, "Будь ласка, введіть данні", Toast.LENGTH_SHORT).show()
             }

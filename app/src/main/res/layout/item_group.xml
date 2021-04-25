@@ -18,6 +18,7 @@
 
     <FrameLayout
         android:id="@+id/item_group"
+        android:onClick="@{(v) -> adapter.onItemClicked(v, model)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -115,8 +116,8 @@
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/ic_edit"
                     android:backgroundTint="@color/white"
-                    android:onClick="@{(v) -> adapter.onItemClicked(v, model)}"
                     android:scaleType="fitCenter"
+                    android:onClick="@{(v) -> adapter.onItemClickedEdit(v, model)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>

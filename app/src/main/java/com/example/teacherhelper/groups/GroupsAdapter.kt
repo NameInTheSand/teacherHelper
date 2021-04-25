@@ -16,6 +16,7 @@ class GroupsAdapter : AbsAdapter<Groups, GroupsAdapter.GroupViewHolder>() {
     private var onClickListener: OnClickListener<Groups>? = null
     private var onClickListenerMinus: OnClickListener<Groups>? = null
     private var onClickListenerPlus: OnClickListener<Groups>? = null
+    private var onClickListenerEdit:OnClickListener<Groups>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
         return GroupViewHolder(
@@ -30,6 +31,9 @@ class GroupsAdapter : AbsAdapter<Groups, GroupsAdapter.GroupViewHolder>() {
     fun onItemClicked(view: View, group: Groups) {
         onClickListener?.onClick(getItemPosition(group), view, group)
     }
+    fun onItemClickedEdit(view: View, group: Groups) {
+        onClickListenerEdit?.onClick(getItemPosition(group), view, group)
+    }
 
     fun onClickListenerMinus(view: View, group: Groups) {
         onClickListenerMinus?.onClick(getItemPosition(group), view, group)
@@ -41,6 +45,14 @@ class GroupsAdapter : AbsAdapter<Groups, GroupsAdapter.GroupViewHolder>() {
 
     fun setOnItemClickListener(callback: (Int, Groups) -> Unit) {
         onClickListener = object : OnClickListener<Groups> {
+            override fun onClick(position: Int, view: View, item: Groups) {
+                callback(position, item)
+            }
+        }
+    }
+
+    fun setOnClickListenerEdit(callback: (Int, Groups) -> Unit) {
+        onClickListenerEdit = object : OnClickListener<Groups> {
             override fun onClick(position: Int, view: View, item: Groups) {
                 callback(position, item)
             }
