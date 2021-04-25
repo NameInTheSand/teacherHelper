@@ -8,6 +8,7 @@
     <string name="student_name_enter">Введіть ім\'я</string>
     <string name="student_surname_enter">Введіть прізвище </string>
     <string name="confirm">Підтвердити</string>
+    <string name="delete">Видалити</string>
     <string name="dismiss">Відмінити</string>
     <string name="add_group">Додати нову групу</string>
     <string name="group_name_hint">Введіть назву групи</string>

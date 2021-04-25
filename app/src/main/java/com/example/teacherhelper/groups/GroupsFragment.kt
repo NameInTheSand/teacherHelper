@@ -79,30 +79,13 @@ class GroupsFragment : Fragment() {
         binding.addButton.setOnClickListener {
             openDialog()
         }
-        binding.searchButton.setOnClickListener {
-            hideKeyboardFrom(requireContext(), binding.searchButton)
-            binding.searchInput.clearFocus()
-            viewModel.viewModelScope.launch {
-                viewModel.search(binding.searchInput.text.toString())
-                delay(1000L)
-                val search = viewModel.searchResult
-                institutionAdapter.notifyData(search)
-                binding.searchInput.text = null
-                binding.addButton.visibility = View.GONE
-            }
         }
-        binding.backButton.setOnClickListener {
-            setupRecyclerView()
-            binding.searchInput.text = null
-            binding.addButton.visibility = View.VISIBLE
-        }
-    }
 
-    fun hideKeyboardFrom(context: Context, view: View) {
-        val imm: InputMethodManager =
-            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
+//    fun hideKeyboardFrom(context: Context, view: View) {
+//        val imm: InputMethodManager =
+//            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.hideSoftInputFromWindow(view.windowToken, 0)
+//    }
 
     private fun openDialog() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_group, null)
@@ -114,19 +97,18 @@ class GroupsFragment : Fragment() {
             alertDialog.dismiss()
         }
         dialogView.findViewById<MaterialButton>(R.id.confirm_button).setOnClickListener {
-            var name: String
-            var course: Int
             if (!dialogView.findViewById<TextInputEditText>(R.id.group_enter_filed).text.toString()
                     .isNullOrEmpty() ||
                 !dialogView.findViewById<TextInputEditText>(R.id.course_enter_filed).text.toString()
                     .isNullOrEmpty()
             ) {
-                name =
+                val name =
                     dialogView.findViewById<TextInputEditText>(R.id.group_enter_filed).text.toString()
-                course =
+                val course =
                     dialogView.findViewById<TextInputEditText>(R.id.course_enter_filed).text.toString()
                         .toInt()
                 viewModel.insert(Groups(name = name, course = course,hours = 0))
+                Toast.makeText(context, "Група $name $course була додана", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "Будь ласка, введіть данні", Toast.LENGTH_SHORT).show()
             }
@@ -157,9 +139,15 @@ class GroupsFragment : Fragment() {
                     dialogView.findViewById<TextInputEditText>(R.id.course_edit_filed).text.toString()
                         .toInt()
                 viewModel.updateGroup(name,course,groups.id)
+                Toast.makeText(context, "Група ${groups.name} ${groups.course} була змінена", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "Будь ласка, введіть данні", Toast.LENGTH_SHORT).show()
             }
+            alertDialog.dismiss()
+        }
+        dialogView.findViewById<MaterialButton>(R.id.delete_button).setOnClickListener {
+            viewModel.deleteGroup(groups.id.toString())
+            Toast.makeText(context, "Група ${groups.name} ${groups.course} була видалена", Toast.LENGTH_SHORT).show()
             alertDialog.dismiss()
         }
     }

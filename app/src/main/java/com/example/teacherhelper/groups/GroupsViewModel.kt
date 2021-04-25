@@ -14,32 +14,19 @@ class GroupsViewModel(private val groupsRepository: GruopsRepository) : ViewMode
 
     val groups = groupsRepository.groups
 
-    var searchResult:List<Groups> = mutableListOf()
-
      fun insert(groups:Groups):Job = viewModelScope.launch {
         groupsRepository.insert(groups)
     }
     fun addHour(newHours:Int, searchId:Int):Job = viewModelScope.launch {
         groupsRepository.update(newHours,searchId)
     }
-    fun search(group: String?) {
-        if(group.isNullOrEmpty()){
-                searchResult = groupsRepository.groups.value!!
-        }
-        else{
-        viewModelScope.launch {
-            groupsRepository.search('%'+group+'%').let {
-                searchResult = it
-            }
-        }
-        }
-    }
+
     fun updateGroup(newName: String,newCourse:Int,searchId: Int):Job = viewModelScope.launch {
         groupsRepository.updateGroup(newName,newCourse,searchId)
     }
 
-    fun nuketable() = viewModelScope.launch {
-        groupsRepository.nukeTable()
+    fun deleteGroup(id:String) = viewModelScope.launch {
+        groupsRepository.delete(id)
     }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {

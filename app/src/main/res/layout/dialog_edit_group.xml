@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,27 +20,43 @@
             android:layout_marginHorizontal="40dp"
             android:inputType="number" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/confirm_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/course_edit_filed"
-            android:layout_alignParentEnd="true"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/confirm"
-            />
+            android:layout_below="@+id/course_edit_filed"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:weightSum="100">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/dismiss_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/course_edit_filed"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginStart="20dp"
-            android:backgroundTint="@color/colorAccent"
-            android:text="@string/dismiss" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dismiss_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="33"
+                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="@color/colorAccent"
+                android:text="@string/dismiss" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="33"
+                android:backgroundTint="@color/black"
+                android:text="@string/delete" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirm_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="33"
+                android:text="@string/confirm" />
+
+        </LinearLayout>
     </RelativeLayout>
 </layout>
